@@ -13,12 +13,12 @@ export const Services: React.FC = () => {
             
             {/* Left Column: Title */}
             <div className="lg:col-span-4">
-                 <span className="text-red-dot font-mono text-sm mb-4 block">02 / EXPERTISE</span>
+                 <span className="text-red-dot font-mono text-sm mb-4 block">02 / CAPABILITIES</span>
                  <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                    What we do
+                    What we deliver
                  </h2>
                  <p className="text-gray-400 max-w-xs">
-                    Full-service digital capabilities from strategy to deployment.
+                    End-to-end — from the first whiteboard sketch to the last line of production code.
                  </p>
             </div>
 
