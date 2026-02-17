@@ -93,7 +93,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
     if (!aiPrompt.trim()) { flash('Describe the project'); return; }
     setGenerating(true);
     try {
-      const res = await fetch(`${API_BASE}/api/admin/generate-project`, {
+      const res = await fetch(`${API_BASE}/api/admin/generate?type=project`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ 
@@ -214,7 +214,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
 
   const handleToggleVisible = async (id: number) => {
     try {
-      const res = await fetch(`${API_BASE}/api/admin/projects/${id}/toggle-visible`, {
+      const res = await fetch(`${API_BASE}/api/admin/projects/${id}`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
       });

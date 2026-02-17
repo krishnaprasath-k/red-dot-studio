@@ -250,7 +250,7 @@ export const BlogAdmin: React.FC = () => {
 
   const handleTogglePublish = async (id: number) => {
     try {
-      await fetch(`${API_BASE}/api/admin/blogs/${id}/toggle-publish`, {
+      await fetch(`${API_BASE}/api/admin/blogs/${id}`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -431,7 +431,7 @@ app.patch('/api/admin/projects/:id/toggle-visible', authMiddleware, async (req, 
 });
 
 // ── AI Portfolio Generation (Groq) ────────────────────────
-app.post('/api/admin/generate-project', authMiddleware, async (req, res) => {
+async function handleProjectGeneration(req, res) {
   const { prompt, image_url, github_url, live_url } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
@@ -517,10 +517,15 @@ Keep it concise, results-oriented, and matching a premium design studio tone.`
     }
     res.status(500).json({ error: 'Failed to generate project details' });
   }
-});
+}
+app.post('/api/admin/generate-project', authMiddleware, handleProjectGeneration);
 
 // ── AI Blog Generation (Groq) ─────────────────────────────
 app.post('/api/admin/generate', authMiddleware, async (req, res) => {
+  // Route to project generation if ?type=project
+  if (req.query.type === 'project') {
+    return handleProjectGeneration(req, res);
+  }
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
