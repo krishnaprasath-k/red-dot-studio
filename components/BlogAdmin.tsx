@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LogIn, LogOut, Plus, Save, Trash2, Eye, EyeOff, Edit3, X, 
-  Download, ArrowLeft, FileText, Clock 
+  Download, ArrowLeft, FileText, Clock, Sparkles, Wand2 
 } from 'lucide-react';
 
 interface BlogPostAdmin {
@@ -59,6 +59,9 @@ export const BlogAdmin: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [generating, setGenerating] = useState(false);
+  const [showAiPanel, setShowAiPanel] = useState(false);
 
   // PWA install prompt
   useEffect(() => {
@@ -129,6 +132,44 @@ export const BlogAdmin: React.FC = () => {
   const flash = (msg: string) => {
     setMessage(msg);
     setTimeout(() => setMessage(''), 3000);
+  };
+
+  // AI generation
+  const handleGenerate = async () => {
+    if (!aiPrompt.trim()) { flash('Enter a topic or idea'); return; }
+    setGenerating(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ prompt: aiPrompt }),
+      });
+      if (res.status === 401) { handleLogout(); return; }
+      if (!res.ok) {
+        const err = await res.json();
+        flash(err.error || 'AI generation failed');
+        setGenerating(false);
+        return;
+      }
+      const data = await res.json();
+      setForm({
+        title: data.title || '',
+        excerpt: data.excerpt || '',
+        content: data.content || '',
+        cover_image: data.cover_image || '',
+        author: 'Red Dot Studio',
+        tags: data.tags || '',
+        published: false,
+        meta_title: data.meta_title || '',
+        meta_description: data.meta_description || '',
+      });
+      setShowAiPanel(false);
+      setAiPrompt('');
+      flash('Blog post generated! Review and edit before publishing.');
+    } catch {
+      flash('Network error during generation');
+    }
+    setGenerating(false);
   };
 
   // Form handlers
@@ -285,6 +326,16 @@ export const BlogAdmin: React.FC = () => {
               <ArrowLeft size={16} /> Back
             </button>
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowAiPanel(!showAiPanel)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                  showAiPanel
+                    ? 'bg-purple-600 text-white'
+                    : 'border border-purple-600/50 text-purple-400 hover:bg-purple-600/10'
+                }`}
+              >
+                <Sparkles size={14} /> AI Generate
+              </button>
               <label className="flex items-center gap-2 text-sm font-mono cursor-pointer">
                 <input
                   type="checkbox"
@@ -305,6 +356,40 @@ export const BlogAdmin: React.FC = () => {
               </button>
             </div>
           </div>
+
+          {/* AI Generation Panel */}
+          {showAiPanel && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-6 bg-purple-950/20 border border-purple-600/30 rounded-lg p-5"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Wand2 size={16} className="text-purple-400" />
+                <span className="text-sm font-mono text-purple-300">AI Blog Generator</span>
+              </div>
+              <p className="text-xs text-gray-500 mb-3">Describe what you want to write about. The AI will generate a full blog post with title, excerpt, tags, SEO metadata, and content.</p>
+              <textarea
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                placeholder="e.g. Write about why startups should invest in branding early, with practical tips and case studies..."
+                className="w-full bg-black/50 border border-purple-800/30 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                rows={3}
+              />
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-[11px] text-gray-600 font-mono">Powered by Groq · Kimi K2</span>
+                <button
+                  onClick={handleGenerate}
+                  disabled={generating || !aiPrompt.trim()}
+                  className="bg-purple-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Sparkles size={14} className={generating ? 'animate-spin' : ''} />
+                  {generating ? 'Generating...' : 'Generate Post'}
+                </button>
+              </div>
+            </motion.div>
+          )}
 
           {message && (
             <div className="mb-4 px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg text-sm text-gray-300 font-mono">
@@ -438,6 +523,12 @@ code block
                 <Download size={14} /> Install
               </button>
             )}
+            <button
+              onClick={() => { openNewPost(); setTimeout(() => setShowAiPanel(true), 100); }}
+              className="border border-purple-600/50 text-purple-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-600/10 transition-colors flex items-center gap-2"
+            >
+              <Sparkles size={14} /> AI Generate
+            </button>
             <button
               onClick={openNewPost}
               className="bg-red-dot text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2"
