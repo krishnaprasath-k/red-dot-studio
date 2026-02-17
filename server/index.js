@@ -61,7 +61,24 @@ async function initDB() {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
     `);
-    console.log('✓ Database table ready');
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS portfolio_projects (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(500) NOT NULL,
+        category VARCHAR(300),
+        description TEXT,
+        image_url VARCHAR(1000),
+        github_url VARCHAR(1000),
+        live_url VARCHAR(1000),
+        year VARCHAR(10),
+        tags TEXT[] DEFAULT '{}',
+        sort_order INT DEFAULT 0,
+        visible BOOLEAN DEFAULT true,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+    console.log('✓ Database tables ready');
   } finally {
     client.release();
   }
@@ -304,6 +321,204 @@ app.patch('/api/admin/blogs/:id/toggle-publish', authMiddleware, async (req, res
 });
 
 
+// ══════════════════════════════════════════════════════════
+//                   PORTFOLIO ROUTES
+// ══════════════════════════════════════════════════════════
+
+// ── Public: Get visible portfolio projects ─────────────────
+app.get('/api/projects', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM portfolio_projects WHERE visible = true ORDER BY sort_order ASC, created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
+// ── Admin: Get ALL portfolio projects ──────────────────────
+app.get('/api/admin/projects', authMiddleware, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM portfolio_projects ORDER BY sort_order ASC, created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
+// ── Admin: Create project ─────────────────────────────────
+app.post('/api/admin/projects', authMiddleware, async (req, res) => {
+  const { title, category, description, image_url, github_url, live_url, year, tags, sort_order, visible } = req.body;
+  if (!title || !title.trim()) {
+    return res.status(400).json({ error: 'Title is required' });
+  }
+  try {
+    const result = await pool.query(
+      `INSERT INTO portfolio_projects (title, category, description, image_url, github_url, live_url, year, tags, sort_order, visible)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING *`,
+      [title, category, description, image_url || '', github_url || '', live_url || '', year || new Date().getFullYear().toString(), tags || [], sort_order || 0, visible !== false]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create project' });
+  }
+});
+
+// ── Admin: Update project ─────────────────────────────────
+app.put('/api/admin/projects/:id', authMiddleware, async (req, res) => {
+  const { title, category, description, image_url, github_url, live_url, year, tags, sort_order, visible } = req.body;
+  try {
+    const result = await pool.query(
+      `UPDATE portfolio_projects SET
+        title = COALESCE($1, title),
+        category = COALESCE($2, category),
+        description = COALESCE($3, description),
+        image_url = COALESCE($4, image_url),
+        github_url = COALESCE($5, github_url),
+        live_url = COALESCE($6, live_url),
+        year = COALESCE($7, year),
+        tags = COALESCE($8, tags),
+        sort_order = COALESCE($9, sort_order),
+        visible = COALESCE($10, visible),
+        updated_at = NOW()
+       WHERE id = $11
+       RETURNING *`,
+      [title, category, description, image_url, github_url, live_url, year, tags, sort_order, visible, req.params.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Project not found' });
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update project' });
+  }
+});
+
+// ── Admin: Delete project ─────────────────────────────────
+app.delete('/api/admin/projects/:id', authMiddleware, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `DELETE FROM portfolio_projects WHERE id = $1 RETURNING id`,
+      [req.params.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Project not found' });
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to delete project' });
+  }
+});
+
+// ── Admin: Toggle project visibility ──────────────────────
+app.patch('/api/admin/projects/:id/toggle-visible', authMiddleware, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `UPDATE portfolio_projects SET visible = NOT visible, updated_at = NOW() WHERE id = $1 RETURNING *`,
+      [req.params.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Project not found' });
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to toggle visibility' });
+  }
+});
+
+// ── AI Portfolio Generation (Groq) ────────────────────────
+app.post('/api/admin/generate-project', authMiddleware, async (req, res) => {
+  const { prompt, image_url, github_url, live_url } = req.body;
+  if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+
+  const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  if (!GROQ_API_KEY) return res.status(500).json({ error: 'Groq API key not configured' });
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    let response;
+    try {
+      response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: 'moonshotai/kimi-k2-instruct-0905',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a portfolio copywriter for Red Dot Studio, a strategy-led design studio in Bangalore, India. Given context about a project (optionally with a GitHub repo link and live URL), generate professional portfolio details.
+
+Respond in exactly this format:
+TITLE: <project title — short, punchy, brandable>
+CATEGORY: <type of work, e.g. "Web Design & Development", "Brand Identity", "Product Design & UI/UX", "E-Commerce & Brand Strategy">
+DESCRIPTION: <1-2 sentence impact-focused description with a measurable result or strong value statement>
+TAGS: <3-5 comma-separated technology/skill tags>
+YEAR: <the year, default to current year if unknown>
+
+Keep it concise, results-oriented, and matching a premium design studio tone.`
+            },
+            {
+              role: 'user',
+              content: `Project info: ${prompt}${github_url ? `\nGitHub: ${github_url}` : ''}${live_url ? `\nLive: ${live_url}` : ''}`
+            }
+          ],
+          temperature: 0.5,
+          max_completion_tokens: 1024,
+          top_p: 1,
+        }),
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    if (!response.ok) {
+      const err = await response.json();
+      console.error('Groq error:', err);
+      return res.status(500).json({ error: 'AI generation failed' });
+    }
+
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content || '';
+
+    // Parse the structured output
+    let title = '', category = '', description = '', tags = '', year = new Date().getFullYear().toString();
+    for (const line of text.split('\n')) {
+      const trimmed = line.trim();
+      if (trimmed.startsWith('TITLE:')) title = trimmed.replace('TITLE:', '').trim();
+      else if (trimmed.startsWith('CATEGORY:')) category = trimmed.replace('CATEGORY:', '').trim();
+      else if (trimmed.startsWith('DESCRIPTION:')) description = trimmed.replace('DESCRIPTION:', '').trim();
+      else if (trimmed.startsWith('TAGS:')) tags = trimmed.replace('TAGS:', '').trim();
+      else if (trimmed.startsWith('YEAR:')) year = trimmed.replace('YEAR:', '').trim();
+    }
+
+    res.json({
+      title: title || 'Untitled Project',
+      category,
+      description,
+      tags,
+      year,
+      image_url: image_url || '',
+      github_url: github_url || '',
+      live_url: live_url || '',
+    });
+  } catch (err) {
+    console.error('Groq generation error:', err);
+    if (err.name === 'AbortError') {
+      return res.status(504).json({ error: 'AI generation timed out' });
+    }
+    res.status(500).json({ error: 'Failed to generate project details' });
+  }
+});
+
 // ── AI Blog Generation (Groq) ─────────────────────────────
 app.post('/api/admin/generate', authMiddleware, async (req, res) => {
   const { prompt } = req.body;
@@ -313,18 +528,23 @@ app.post('/api/admin/generate', authMiddleware, async (req, res) => {
   if (!GROQ_API_KEY) return res.status(500).json({ error: 'Groq API key not configured' });
 
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'moonshotai/kimi-k2-instruct-0905',
-        messages: [
-          {
-            role: 'system',
-            content: `You are a world-class blog writer for Red Dot Studio, a strategy-led design studio based in Bangalore, India. Write in a confident, professional, clear tone. Use Markdown formatting.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    let response;
+    try {
+      response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: 'moonshotai/kimi-k2-instruct-0905',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a world-class blog writer for Red Dot Studio, a strategy-led design studio based in Bangalore, India. Write in a confident, professional, clear tone. Use Markdown formatting.
 
 When given a topic, generate a complete blog post with:
 1. A compelling title (on the first line, prefixed with TITLE: )
@@ -347,11 +567,14 @@ The content should be 600-1200 words, insightful, actionable, and relevant to de
         top_p: 1,
       }),
     });
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       const err = await response.json();
       console.error('Groq error:', err);
-      return res.status(500).json({ error: 'AI generation failed', details: err });
+      return res.status(500).json({ error: 'AI generation failed' });
     }
 
     const data = await response.json();
@@ -395,6 +618,9 @@ The content should be 600-1200 words, insightful, actionable, and relevant to de
     });
   } catch (err) {
     console.error('Groq generation error:', err);
+    if (err.name === 'AbortError') {
+      return res.status(504).json({ error: 'AI generation timed out' });
+    }
     res.status(500).json({ error: 'Failed to generate blog post' });
   }
 });

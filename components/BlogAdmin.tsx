@@ -2,8 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LogIn, LogOut, Plus, Save, Trash2, Eye, EyeOff, Edit3, X, 
-  Download, ArrowLeft, FileText, Clock, Sparkles, Wand2 
+  Download, ArrowLeft, FileText, Clock, Sparkles, Wand2, Briefcase, PenTool
 } from 'lucide-react';
+import { PortfolioAdmin } from './PortfolioAdmin';
 
 interface BlogPostAdmin {
   id: number;
@@ -62,6 +63,7 @@ export const BlogAdmin: React.FC = () => {
   const [aiPrompt, setAiPrompt] = useState('');
   const [generating, setGenerating] = useState(false);
   const [showAiPanel, setShowAiPanel] = useState(false);
+  const [adminTab, setAdminTab] = useState<'blog' | 'portfolio'>('blog');
 
   // PWA install prompt
   useEffect(() => {
@@ -508,11 +510,10 @@ code block
     <div className="min-h-screen bg-black pt-6 pb-20 px-4">
       <div className="max-w-5xl mx-auto">
 
-        {/* Admin Header */}
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-red-dot" />
-            <span className="font-display font-bold text-xl tracking-tighter">Blog Admin</span>
+            <span className="font-display font-bold text-xl tracking-tighter">RDS Admin</span>
           </div>
           <div className="flex items-center gap-3">
             {installPrompt && (
@@ -524,6 +525,49 @@ code block
               </button>
             )}
             <button
+              onClick={handleLogout}
+              aria-label="Log out"
+              className="border border-neutral-700 text-gray-400 px-4 py-2 rounded-lg text-sm hover:border-white hover:text-white transition-colors flex items-center gap-2"
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Tab switcher */}
+        <div className="flex gap-1 mb-8 bg-neutral-900 border border-neutral-800 rounded-lg p-1 w-fit">
+          <button
+            onClick={() => setAdminTab('blog')}
+            className={`px-5 py-2 rounded-md text-sm font-mono transition-colors flex items-center gap-2 ${
+              adminTab === 'blog' ? 'bg-red-dot text-white' : 'text-gray-500 hover:text-white'
+            }`}
+          >
+            <PenTool size={14} /> Blog
+          </button>
+          <button
+            onClick={() => setAdminTab('portfolio')}
+            className={`px-5 py-2 rounded-md text-sm font-mono transition-colors flex items-center gap-2 ${
+              adminTab === 'portfolio' ? 'bg-red-dot text-white' : 'text-gray-500 hover:text-white'
+            }`}
+          >
+            <Briefcase size={14} /> Portfolio
+          </button>
+        </div>
+
+        {/* Portfolio tab */}
+        {adminTab === 'portfolio' && (
+          <PortfolioAdmin token={token} onLogout={handleLogout} />
+        )}
+
+        {/* Blog tab */}
+        {adminTab === 'blog' && (
+        <>
+
+        {/* Blog actions */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-500 font-mono text-xs">{posts.length} posts</p>
+          <div className="flex items-center gap-3">
+            <button
               onClick={() => { openNewPost(); setTimeout(() => setShowAiPanel(true), 100); }}
               className="border border-purple-600/50 text-purple-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-600/10 transition-colors flex items-center gap-2"
             >
@@ -534,12 +578,6 @@ code block
               className="bg-red-dot text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2"
             >
               <Plus size={16} /> New Post
-            </button>
-            <button
-              onClick={handleLogout}
-              className="border border-neutral-700 text-gray-400 px-4 py-2 rounded-lg text-sm hover:border-white hover:text-white transition-colors flex items-center gap-2"
-            >
-              <LogOut size={14} />
             </button>
           </div>
         </div>
@@ -632,6 +670,8 @@ code block
               </motion.div>
             ))}
           </div>
+        )}
+        </>
         )}
       </div>
     </div>

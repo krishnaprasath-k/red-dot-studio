@@ -54,7 +54,51 @@ export async function initDB() {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
     `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS portfolio_projects (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(500) NOT NULL,
+        category VARCHAR(300),
+        description TEXT,
+        image_url VARCHAR(1000),
+        github_url VARCHAR(1000),
+        live_url VARCHAR(1000),
+        year VARCHAR(10),
+        tags TEXT[] DEFAULT '{}',
+        sort_order INT DEFAULT 0,
+        visible BOOLEAN DEFAULT true,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
   } finally {
     client.release();
+  }
+}
+
+let _portfolioTableReady = false;
+export async function ensurePortfolioTable() {
+  if (_portfolioTableReady) return;
+  try {
+    await getPool().query(`
+      CREATE TABLE IF NOT EXISTS portfolio_projects (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(500) NOT NULL,
+        category VARCHAR(300),
+        description TEXT,
+        image_url VARCHAR(1000),
+        github_url VARCHAR(1000),
+        live_url VARCHAR(1000),
+        year VARCHAR(10),
+        tags TEXT[] DEFAULT '{}',
+        sort_order INT DEFAULT 0,
+        visible BOOLEAN DEFAULT true,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+    _portfolioTableReady = true;
+  } catch (err) {
+    console.error('[db] Failed to ensure portfolio_projects table:', err);
   }
 }

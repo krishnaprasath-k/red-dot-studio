@@ -17,13 +17,18 @@ export default async function handler(req, res) {
   if (!GROQ_API_KEY) return res.status(500).json({ error: 'Groq API key not configured' });
 
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    let response;
+    try {
+      response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
         model: 'moonshotai/kimi-k2-instruct-0905',
         messages: [
           {
@@ -51,11 +56,14 @@ The content should be 600-1200 words, insightful, actionable, and relevant to de
         top_p: 1,
       }),
     });
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       const err = await response.json();
       console.error('Groq error:', err);
-      return res.status(500).json({ error: 'AI generation failed', details: err });
+      return res.status(500).json({ error: 'AI generation failed' });
     }
 
     const data = await response.json();
@@ -97,6 +105,9 @@ The content should be 600-1200 words, insightful, actionable, and relevant to de
     });
   } catch (err) {
     console.error('Groq generation error:', err);
+    if (err.name === 'AbortError') {
+      return res.status(504).json({ error: 'AI generation timed out' });
+    }
     res.status(500).json({ error: 'Failed to generate blog post' });
   }
 }

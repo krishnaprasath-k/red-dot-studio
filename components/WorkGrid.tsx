@@ -1,9 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Github, ExternalLink } from 'lucide-react';
+
+interface PortfolioProject {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image_url: string;
+  github_url: string;
+  live_url: string;
+  year: string;
+  tags: string[];
+  sort_order: number;
+  visible: boolean;
+}
+
+const API_BASE = import.meta.env.DEV ? 'http://localhost:3001' : '';
 
 export const WorkGrid: React.FC = () => {
+  const [dbProjects, setDbProjects] = useState<PortfolioProject[] | null>(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/projects`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setDbProjects(data);
+        }
+      })
+      .catch((err) => {
+        console.error('[WorkGrid] Failed to fetch projects:', err);
+      });
+  }, []);
+
+  // Use DB projects if available, otherwise fall back to hardcoded
+  const projects = dbProjects
+    ? dbProjects
+        .filter(p => p.visible !== false)
+        .map(p => ({
+          id: String(p.id),
+          title: p.title,
+          category: p.category,
+          description: p.description,
+          imageUrl: p.image_url,
+          year: p.year,
+          github_url: p.github_url,
+          live_url: p.live_url,
+        }))
+    : PROJECTS.map(p => ({ ...p, github_url: '', live_url: '' }));
+
   return (
     <section id="work" className="py-24 border-t border-neutral-800">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +65,7 @@ export const WorkGrid: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-x-8 gap-y-16">
-          {PROJECTS.map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -26,6 +73,10 @@ export const WorkGrid: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group cursor-pointer"
+              onClick={() => {
+                if (project.live_url) window.open(project.live_url, '_blank');
+                else if (project.github_url) window.open(project.github_url, '_blank');
+              }}
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm mb-6 bg-neutral-900">
                 <img 
@@ -41,11 +92,35 @@ export const WorkGrid: React.FC = () => {
                   <p className="text-white/90 text-sm leading-relaxed max-w-xs">{project.description}</p>
                 </div>
 
-                {/* Arrow */}
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-red-dot text-white p-3 rounded-full">
+                {/* Arrow / Links */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+                    {project.github_url && (
+                      <a
+                        href={project.github_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-neutral-900/80 backdrop-blur-sm text-white p-2.5 rounded-full hover:bg-neutral-800 transition-colors"
+                      >
+                        <Github size={16} />
+                      </a>
+                    )}
+                    {project.live_url && (
+                      <a
+                        href={project.live_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-red-dot text-white p-2.5 rounded-full hover:bg-red-600 transition-colors"
+                      >
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
+                    {!project.live_url && !project.github_url && (
+                      <div className="bg-red-dot text-white p-3 rounded-full">
                         <ArrowUpRight size={18} />
-                    </div>
+                      </div>
+                    )}
                 </div>
               </div>
 
