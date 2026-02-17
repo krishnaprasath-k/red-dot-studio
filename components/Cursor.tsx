@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export const Cursor: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring-based follow — no React re-renders on mouse move
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 15, mass: 0.1 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 15, mass: 0.1 });
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX - 8);
+      mouseY.set(e.clientY - 8);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -26,22 +32,21 @@ export const Cursor: React.FC = () => {
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <motion.div
       className="fixed top-0 left-0 w-4 h-4 bg-red-dot rounded-full custom-cursor z-[9999] hidden md:block"
+      style={{
+        x: springX,
+        y: springY,
+      }}
       animate={{
-        x: mousePosition.x - 8,
-        y: mousePosition.y - 8,
         scale: isHovering ? 2.5 : 1,
         opacity: 1
       }}
       transition={{
-        type: "spring",
-        stiffness: 150,
-        damping: 15,
-        mass: 0.1
+        scale: { type: "spring", stiffness: 150, damping: 15, mass: 0.1 }
       }}
     />
   );

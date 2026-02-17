@@ -11,24 +11,31 @@ const Counter: React.FC<{ from: number; to: number; suffix?: string; duration?: 
     const controls = animate(count, to, { duration, ease: 'easeOut' });
     const unsubscribe = rounded.on('change', (v) => setDisplay(v));
     return () => { controls.stop(); unsubscribe(); };
-  }, []);
+  }, [count, to, duration, rounded]);
 
   return <>{display}{suffix}</>;
 };
+
+const stats = [
+  { value: 3, suffix: '+', label: 'Projects Delivered' },
+  { value: 98, suffix: '%', label: 'Client Retention' },
+  { value: 3, suffix: 'x', label: 'Avg. Conversion Lift' },
+  { value: 2, suffix: '+', label: 'Years in Business' },
+];
 
 export const Hero: React.FC = () => {
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-24 pb-12 overflow-hidden">
       {/* Subtle grid */}
       <div className="absolute inset-0 bg-grid-pattern bg-[length:60px_60px] opacity-[0.04] pointer-events-none" />
-      
+
       {/* Red accent glow — subtle, bottom right */}
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-red-dot/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
-        
+
         {/* Top line — credibility bar */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -38,12 +45,12 @@ export const Hero: React.FC = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             Accepting new projects
           </span>
-          <span className="text-xs text-gray-600 font-mono">Est. 2019 · Bangalore, India</span>
+          <span className="text-xs text-gray-600 font-mono"> · Bangalore, India</span>
         </motion.div>
 
         {/* Main headline */}
         <div className="mb-12">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
@@ -53,31 +60,31 @@ export const Hero: React.FC = () => {
             that <span className="text-red-dot">outperform.</span>
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed"
           >
-            Strategy-led design studio helping ambitious companies ship digital products 
+            Strategy-led design studio helping ambitious companies ship digital products
             that convert visitors into customers — faster than the competition.
           </motion.p>
         </div>
 
         {/* CTAs */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="flex flex-wrap gap-4 mb-20"
         >
-          <a 
+          <a
             href="#contact"
             className="group inline-flex items-center gap-3 px-7 py-3.5 bg-red-dot text-white font-medium rounded-full hover:bg-red-600 transition-all hover:gap-4"
           >
             Start a project <ArrowRight className="w-4 h-4" />
           </a>
-          <a 
+          <a
             href="#work"
             className="inline-flex items-center gap-2 px-7 py-3.5 border border-neutral-700 text-gray-300 font-medium rounded-full hover:border-white hover:text-white transition-all"
           >
@@ -86,18 +93,14 @@ export const Hero: React.FC = () => {
         </motion.div>
 
         {/* Stats bar — social proof */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-neutral-800/80"
         >
-          {[
-            { value: 60, suffix: '+', label: 'Projects Delivered' },
-            { value: 98, suffix: '%', label: 'Client Retention' },
-            { value: 3, suffix: 'x', label: 'Avg. Conversion Lift' },
-            { value: 6, suffix: '+', label: 'Years in Business' },
-          ].map((stat, i) => (
+          {stats.map((stat, i) => (
             <div key={i} className="flex flex-col">
               <span className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
                 <Counter from={0} to={stat.value} suffix={stat.suffix} duration={2 + i * 0.3} />
@@ -109,7 +112,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
