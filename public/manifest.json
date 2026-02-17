@@ -1,0 +1,22 @@
+{
+  "name": "Red Dot Studio Admin",
+  "short_name": "RDS Admin",
+  "description": "Red Dot Studio Blog Admin Panel",
+  "start_url": "/rds-admin",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FF2A00",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

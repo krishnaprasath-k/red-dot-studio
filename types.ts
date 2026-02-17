@@ -19,3 +19,19 @@ export enum ViewMode {
   GRID = 'GRID',
   LIST = 'LIST'
 }
+
+export interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  cover_image: string;
+  author: string;
+  tags: string[];
+  published: boolean;
+  meta_title: string;
+  meta_description: string;
+  created_at: string;
+  updated_at: string;
+}

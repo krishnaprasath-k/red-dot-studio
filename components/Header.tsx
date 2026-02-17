@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
     })
   };
 
-  const navItems = ['Work', 'Services', 'Studio', 'Contact'];
+  const navItems = ['Work', 'Services', 'Studio', 'Blog', 'Contact'];
 
   return (
     <>
@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <a href="#" className="relative z-50 flex items-center gap-2 group" onClick={() => setIsOpen(false)}>
+            <a href="/" className="relative z-50 flex items-center gap-2 group" onClick={(e) => { e.preventDefault(); setIsOpen(false); window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }}>
               <div className={`w-3 h-3 rounded-full transition-colors duration-300 group-hover:scale-125 ${isOpen ? 'bg-white' : 'bg-red-dot'}`}></div>
               <span className="font-display font-bold text-xl tracking-tighter mix-blend-difference">RED DOT STUDIO</span>
             </a>
@@ -69,6 +69,13 @@ export const Header: React.FC = () => {
                   {item}
                 </a>
               ))}
+              <a 
+                href="/blog"
+                onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/blog'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                className="text-sm font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-wide"
+              >
+                Blog
+              </a>
             </nav>
 
             {/* CTA & Mobile Toggle */}
@@ -122,8 +129,15 @@ export const Header: React.FC = () => {
                     variants={linkVariants}
                   >
                      <a 
-                        href={`#${item.toLowerCase()}`}
-                        onClick={() => setIsOpen(false)}
+                        href={item === 'Blog' ? '/blog' : `#${item.toLowerCase()}`}
+                        onClick={(e) => {
+                          setIsOpen(false);
+                          if (item === 'Blog') {
+                            e.preventDefault();
+                            window.history.pushState({}, '', '/blog');
+                            window.dispatchEvent(new PopStateEvent('popstate'));
+                          }
+                        }}
                         className="font-display text-5xl sm:text-7xl font-bold text-white tracking-tighter hover:text-red-dot transition-colors block"
                      >
                         {item}

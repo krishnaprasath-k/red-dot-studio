@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /blog
+Allow: /blog/*
+Disallow: /rds-admin
+
+Sitemap: /api/sitemap.xml
