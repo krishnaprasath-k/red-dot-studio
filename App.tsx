@@ -9,7 +9,7 @@ import { Cursor } from './components/Cursor';
 import { Blog } from './components/Blog';
 import { BlogPost } from './components/BlogPost';
 import { BlogAdmin } from './components/BlogAdmin';
-
+import { Analytics } from "@vercel/analytics/next"
 /**
  * Simple path-based router using popstate.
  * Avoids hard dependency on react-router-dom at runtime so the site
