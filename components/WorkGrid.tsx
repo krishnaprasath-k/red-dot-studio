@@ -28,14 +28,16 @@ export const WorkGrid: React.FC = () => {
               className="group cursor-pointer"
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm mb-6 bg-neutral-900">
-                <img 
-                  src={project.imageUrl} 
+                <img
+                  src={project.imageUrl}
                   alt={project.title}
+                  width={1200}
+                  height={900}
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
-                
+
                 {/* Hover overlay with description */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
                   <p className="text-white/90 text-sm leading-relaxed max-w-xs">{project.description}</p>
@@ -43,9 +45,9 @@ export const WorkGrid: React.FC = () => {
 
                 {/* Arrow */}
                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-red-dot text-white p-3 rounded-full">
-                        <ArrowUpRight size={18} />
-                    </div>
+                  <div className="bg-red-dot text-white p-3 rounded-full">
+                    <ArrowUpRight size={18} />
+                  </div>
                 </div>
               </div>
 

@@ -3,36 +3,36 @@ import { Project, Service } from './types';
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'Velta Finance',
-    category: 'Brand Identity & Web Platform',
-    description: 'Complete rebrand and investor-facing web platform for a Series B fintech. Resulted in 40% more qualified leads within 90 days.',
+    title: 'LinkMate',
+    category: 'Full-Stack Web Application',
+    description: 'Built a modern portfolio builder with customizable sections, drag-and-drop link management, and real-time analytics tracking link, social, and project engagement. Boosted performance by 40% through efficient caching and optimized data flows.',
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
     year: '2025'
   },
   {
     id: '2',
-    title: 'Arkhaus Group',
-    category: 'Web Design & Development',
-    description: 'Award-winning portfolio site for a Copenhagen architecture firm. 4.2s avg. session duration, 2x industry benchmark.',
-    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
+    title: 'AI-View',
+    category: 'AI-Powered Web Application',
+    description: 'Engineered a smart interview simulation platform using Gemini AI to generate tailored questions based on role and company. Built post-interview analytics to score responses and deliver personalized improvement feedback.',
+    imageUrl: 'https://cdn.analyticsvidhya.com/wp-content/uploads/2024/09/AI-interview-questions-scaled.webp',
     year: '2025'
   },
   {
     id: '3',
-    title: 'Maison Claret',
+    title: 'OpenWork',
     category: 'E-Commerce & Brand Strategy',
-    description: 'Luxury skincare DTC launch — from naming to Shopify build. €180K revenue in the first quarter post-launch.',
-    imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1200&auto=format&fit=crop',
+    description: 'We are building OpenWork, a decentralized work protocol redefining the way people collaborate on the internet. Free from central authority, OpenWork introduces a new paradigm of work engagement and management.',
+    imageUrl: 'https://app.openwork.technology/about-logo.svg',
     year: '2024'
   },
-  {
-    id: '4',
-    title: 'Conduit SaaS',
-    category: 'Product Design & UI/UX',
-    description: 'End-to-end design system and dashboard for a logistics SaaS platform. Reduced user onboarding time by 60%.',
-    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
-    year: '2024'
-  }
+  // {
+  //   id: '4',
+  //   title: 'Conduit SaaS',
+  //   category: 'Product Design & UI/UX',
+  //   description: 'End-to-end design system and dashboard for a logistics SaaS platform. Reduced user onboarding time by 60%.',
+  //   imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+  //   year: '2024'
+  // }
 ];
 
 export const SERVICES: Service[] = [

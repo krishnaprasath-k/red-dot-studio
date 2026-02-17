@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { WorkGrid } from './components/WorkGrid';
 import { Services } from './components/Services';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
+import { GetInTouch } from './components/GetInTouch';
 import { Cursor } from './components/Cursor';
 
 const App: React.FC = () => {
-  // Smooth scroll behavior
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
 
   return (
     <div className="bg-black min-h-screen text-white selection:bg-red-dot selection:text-white">
@@ -25,6 +19,7 @@ const App: React.FC = () => {
         <WorkGrid />
         <Services />
         <About />
+        <GetInTouch />
       </main>
       <Footer />
     </div>
