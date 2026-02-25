@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+﻿import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, Save, Trash2, Eye, EyeOff, Edit3,
@@ -230,9 +230,9 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
     }
   };
 
-  // ═══════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   //                    EDITOR VIEW
-  // ═══════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   if (view === 'editor') {
     return (
       <div>
@@ -240,14 +240,14 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={() => setView('list')}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-mono"
+            className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors text-sm font-mono"
           >
             <ArrowLeft size={16} /> Back
           </button>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowAiPanel(!showAiPanel)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-sm text-sm font-medium transition-colors flex items-center gap-2 ${
                 showAiPanel
                   ? 'bg-purple-600 text-white'
                   : 'border border-purple-600/50 text-purple-400 hover:bg-purple-600/10'
@@ -269,7 +269,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-red-dot text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2 disabled:opacity-50"
+              className="bg-red-dot text-white px-5 py-2 rounded-sm text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2 disabled:opacity-50"
             >
               <Save size={14} /> {saving ? 'Saving...' : 'Save'}
             </button>
@@ -284,46 +284,46 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="mb-6 bg-purple-950/20 border border-purple-600/30 rounded-lg p-5"
+            className="mb-6 bg-purple-950/20 border border-purple-600/30 rounded-sm p-5"
           >
             <div className="flex items-center gap-2 mb-3">
               <Wand2 size={16} className="text-purple-400" />
               <span className="text-sm font-mono text-purple-300">AI Portfolio Generator</span>
             </div>
             <p className="text-xs text-gray-500 mb-3">
-              Describe the project below. Fill in the image, GitHub & live URLs first — the AI will use them as context and auto-fill title, category, description, and tags.
+              Describe the project below. Fill in the image, GitHub & live URLs first â€” the AI will use them as context and auto-fill title, category, description, and tags.
             </p>
 
             {/* Pre-fill links before AI generation */}
             <div className="grid md:grid-cols-3 gap-3 mb-3">
-              <div className="flex items-center gap-2 bg-black/50 border border-purple-800/20 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 bg-gray-50/50 border border-purple-800/20 rounded-lg px-3 py-2">
                 <Image size={14} className="text-gray-500 shrink-0" />
                 <input
                   type="text"
                   placeholder="Image URL"
                   value={form.image_url}
                   onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                  className="bg-transparent text-white text-xs w-full focus:outline-none placeholder-gray-600"
+                  className="bg-transparent text-gray-900 text-xs w-full focus:outline-none placeholder-gray-600"
                 />
               </div>
-              <div className="flex items-center gap-2 bg-black/50 border border-purple-800/20 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 bg-gray-50/50 border border-purple-800/20 rounded-lg px-3 py-2">
                 <Github size={14} className="text-gray-500 shrink-0" />
                 <input
                   type="text"
                   placeholder="GitHub URL"
                   value={form.github_url}
                   onChange={(e) => setForm({ ...form, github_url: e.target.value })}
-                  className="bg-transparent text-white text-xs w-full focus:outline-none placeholder-gray-600"
+                  className="bg-transparent text-gray-900 text-xs w-full focus:outline-none placeholder-gray-600"
                 />
               </div>
-              <div className="flex items-center gap-2 bg-black/50 border border-purple-800/20 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 bg-gray-50/50 border border-purple-800/20 rounded-lg px-3 py-2">
                 <ExternalLink size={14} className="text-gray-500 shrink-0" />
                 <input
                   type="text"
                   placeholder="Live URL"
                   value={form.live_url}
                   onChange={(e) => setForm({ ...form, live_url: e.target.value })}
-                  className="bg-transparent text-white text-xs w-full focus:outline-none placeholder-gray-600"
+                  className="bg-transparent text-gray-900 text-xs w-full focus:outline-none placeholder-gray-600"
                 />
               </div>
             </div>
@@ -332,15 +332,15 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g. A SaaS dashboard for logistics built with Next.js and Tailwind. Reduced onboarding time by 60%..."
-              className="w-full bg-black/50 border border-purple-800/30 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+              className="w-full bg-gray-50/50 border border-purple-800/30 rounded-sm px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors resize-none"
               rows={2}
             />
             <div className="flex items-center justify-between mt-3">
-              <span className="text-[11px] text-gray-600 font-mono">Powered by Groq · Kimi K2</span>
+              <span className="text-[11px] text-gray-600 font-mono">Powered by Groq Â· Kimi K2</span>
               <button
                 onClick={handleGenerate}
                 disabled={generating || !aiPrompt.trim()}
-                className="bg-purple-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-purple-600 text-white px-5 py-2 rounded-sm text-sm font-medium hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Sparkles size={14} className={generating ? 'animate-spin' : ''} />
                 {generating ? 'Generating...' : 'Generate Details'}
@@ -351,7 +351,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
         </AnimatePresence>
 
         {message && (
-          <div className="mb-4 px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg text-sm text-gray-300 font-mono">
+          <div className="mb-4 px-4 py-2 bg-gray-50 border border-gray-200 rounded-sm text-sm text-gray-600 font-mono">
             {message}
           </div>
         )}
@@ -363,7 +363,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
             placeholder="Project title..."
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
-            className="w-full bg-transparent text-3xl md:text-4xl font-display font-bold text-white placeholder-gray-700 focus:outline-none border-b border-neutral-800 pb-4"
+            className="w-full bg-transparent text-3xl md:text-4xl font-display font-bold text-white placeholder-gray-400 focus:outline-none border-b border-gray-200 pb-4"
           />
 
           <input
@@ -371,14 +371,14 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
             placeholder="Category (e.g. Web Design & Development)"
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full bg-transparent text-lg text-gray-400 placeholder-gray-700 focus:outline-none border-b border-neutral-800 pb-3"
+            className="w-full bg-transparent text-lg text-gray-400 placeholder-gray-400 focus:outline-none border-b border-gray-200 pb-3"
           />
 
           <textarea
-            placeholder="Description — results-focused, 1-2 sentences..."
+            placeholder="Description â€” results-focused, 1-2 sentences..."
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors resize-none"
+            className="w-full bg-gray-50 border border-gray-200 rounded-sm px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors resize-none"
             rows={3}
           />
 
@@ -390,7 +390,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
                 placeholder="Image URL"
                 value={form.image_url}
                 onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                className="w-full bg-neutral-900 border border-neutral-800 rounded-lg pl-9 pr-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+                className="w-full bg-gray-50 border border-gray-200 rounded-sm pl-9 pr-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
               />
             </div>
             <div className="relative">
@@ -400,7 +400,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
                 placeholder="GitHub URL"
                 value={form.github_url}
                 onChange={(e) => setForm({ ...form, github_url: e.target.value })}
-                className="w-full bg-neutral-900 border border-neutral-800 rounded-lg pl-9 pr-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+                className="w-full bg-gray-50 border border-gray-200 rounded-sm pl-9 pr-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
               />
             </div>
             <div className="relative">
@@ -410,7 +410,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
                 placeholder="Live URL"
                 value={form.live_url}
                 onChange={(e) => setForm({ ...form, live_url: e.target.value })}
-                className="w-full bg-neutral-900 border border-neutral-800 rounded-lg pl-9 pr-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+                className="w-full bg-gray-50 border border-gray-200 rounded-sm pl-9 pr-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
               />
             </div>
           </div>
@@ -421,27 +421,27 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
               placeholder="Tags (comma separated)"
               value={form.tags}
               onChange={(e) => setForm({ ...form, tags: e.target.value })}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+              className="w-full bg-gray-50 border border-gray-200 rounded-sm px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
             />
             <input
               type="text"
               placeholder="Year"
               value={form.year}
               onChange={(e) => setForm({ ...form, year: e.target.value })}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+              className="w-full bg-gray-50 border border-gray-200 rounded-sm px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
             />
             <input
               type="number"
               placeholder="Sort order (0 = first)"
               value={form.sort_order}
               onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })}
-              className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-red-dot transition-colors"
+              className="w-full bg-gray-50 border border-gray-200 rounded-sm px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-red-dot transition-colors"
             />
           </div>
 
           {/* Image preview */}
           {form.image_url && (
-            <div className="aspect-[4/3] max-w-md overflow-hidden rounded-lg bg-neutral-900 border border-neutral-800">
+            <div className="aspect-[4/3] max-w-md overflow-hidden rounded-sm bg-gray-50 border border-gray-200">
               <img src={form.image_url} alt="Preview" className="object-cover w-full h-full" />
             </div>
           )}
@@ -450,9 +450,9 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
     );
   }
 
-  // ═══════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   //                    PROJECT LIST VIEW
-  // ═══════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   return (
     <div>
       {/* Actions */}
@@ -461,13 +461,13 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => { openNewProject(); setTimeout(() => setShowAiPanel(true), 100); }}
-            className="border border-purple-600/50 text-purple-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-600/10 transition-colors flex items-center gap-2"
+            className="border border-purple-600/50 text-purple-400 px-4 py-2 rounded-sm text-sm font-medium hover:bg-purple-600/10 transition-colors flex items-center gap-2"
           >
             <Sparkles size={14} /> AI Generate
           </button>
           <button
             onClick={openNewProject}
-            className="bg-red-dot text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2"
+            className="bg-red-dot text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2"
           >
             <Plus size={16} /> New Project
           </button>
@@ -475,7 +475,7 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
       </div>
 
       {message && (
-        <div className="mb-6 px-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg text-sm text-gray-300 font-mono">
+        <div className="mb-6 px-4 py-2 bg-gray-50 border border-gray-200 rounded-sm text-sm text-gray-600 font-mono">
           {message}
         </div>
       )}
@@ -483,17 +483,17 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
       {/* Project list */}
       {loading ? (
         <div className="flex justify-center py-16">
-          <div className="w-8 h-8 border-2 border-neutral-700 border-t-red-dot rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-gray-300 border-t-red-dot rounded-full animate-spin" />
         </div>
       ) : projects.length === 0 ? (
-        <div className="text-center py-20 border border-dashed border-neutral-800 rounded-lg">
+        <div className="text-center py-20 border border-dashed border-gray-200 rounded-lg">
           <Image size={40} className="text-gray-700 mx-auto mb-4" />
           <p className="text-gray-500 font-mono text-sm mb-4">No portfolio projects yet</p>
           <button
             onClick={openNewProject}
             className="text-red-dot hover:underline font-mono text-sm"
           >
-            Add your first project →
+            Add your first project â†’
           </button>
         </div>
       ) : (
@@ -503,11 +503,11 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
               key={project.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden flex flex-col sm:flex-row hover:border-neutral-700 transition-colors"
+              className="bg-gray-50 border border-gray-200 rounded-sm overflow-hidden flex flex-col sm:flex-row hover:border-gray-300 transition-colors"
             >
               {/* Thumbnail */}
               {project.image_url && (
-                <div className="sm:w-40 h-28 sm:h-auto shrink-0 bg-neutral-800">
+                <div className="sm:w-40 h-28 sm:h-auto shrink-0 bg-gray-100">
                   <img src={project.image_url} alt={project.title} className="object-cover w-full h-full" />
                 </div>
               )}
@@ -520,22 +520,22 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
                       {project.visible ? <Eye size={10} /> : <EyeOff size={10} />}
                       {project.visible ? 'Visible' : 'Hidden'}
                     </span>
-                    <h3 className="font-display font-medium text-white truncate">{project.title}</h3>
+                    <h3 className="font-display font-medium text-gray-900 truncate">{project.title}</h3>
                   </div>
-                  <p className="text-xs text-gray-500 font-mono mb-1">{project.category} · {project.year}</p>
+                  <p className="text-xs text-gray-500 font-mono mb-1">{project.category} Â· {project.year}</p>
                   <div className="flex items-center gap-3">
                     {project.github_url && (
-                      <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors">
+                      <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                         <Github size={13} />
                       </a>
                     )}
                     {project.live_url && (
-                      <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors">
+                      <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                         <ExternalLink size={13} />
                       </a>
                     )}
                     {project.tags?.length > 0 && (
-                      <span className="text-[10px] text-gray-600 font-mono">{project.tags.join(' · ')}</span>
+                      <span className="text-[10px] text-gray-600 font-mono">{project.tags.join(' Â· ')}</span>
                     )}
                   </div>
                 </div>
@@ -543,21 +543,21 @@ export const PortfolioAdmin: React.FC<Props> = ({ token, onLogout }) => {
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleToggleVisible(project.id)}
-                    className={`p-2 rounded-lg border transition-colors ${project.visible ? 'border-green-800 text-green-400 hover:bg-green-500/10' : 'border-neutral-700 text-gray-500 hover:text-yellow-400 hover:border-yellow-800'}`}
+                    className={`p-2 rounded-lg border transition-colors ${project.visible ? 'border-green-300 text-green-600 hover:bg-green-50' : 'border-gray-300 text-gray-500 hover:text-yellow-600 hover:border-yellow-300'}`}
                     title={project.visible ? 'Hide' : 'Show'}
                   >
                     {project.visible ? <EyeOff size={14} /> : <Eye size={14} />}
                   </button>
                   <button
                     onClick={() => openEditProject(project)}
-                    className="p-2 rounded-lg border border-neutral-700 text-gray-400 hover:text-white hover:border-white transition-colors"
+                    className="p-2 rounded-lg border border-gray-300 text-gray-500 hover:text-white hover:border-gray-900 transition-colors"
                     title="Edit"
                   >
                     <Edit3 size={14} />
                   </button>
                   <button
                     onClick={() => handleDelete(project.id)}
-                    className="p-2 rounded-lg border border-neutral-700 text-gray-500 hover:text-red-500 hover:border-red-800 transition-colors"
+                    className="p-2 rounded-lg border border-gray-300 text-gray-500 hover:text-red-500 hover:border-red-300 transition-colors"
                     title="Delete"
                   >
                     <Trash2 size={14} />

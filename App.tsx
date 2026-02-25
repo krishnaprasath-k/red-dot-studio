@@ -42,7 +42,7 @@ const App: React.FC = () => {
   // ── Hidden admin route ──────────────────────────────
   if (pathname === '/rds-admin') {
     return (
-      <div className="bg-black min-h-screen text-white selection:bg-red-dot selection:text-white">
+      <div className="bg-white min-h-screen text-gray-900 selection:bg-red-dot selection:text-white">
         <BlogAdmin />
       </div>
     );
@@ -52,7 +52,7 @@ const App: React.FC = () => {
   const blogMatch = pathname.match(/^\/blog\/(.+)$/);
   if (blogMatch) {
     return (
-      <div className="bg-black min-h-screen text-white selection:bg-red-dot selection:text-white">
+      <div className="bg-white min-h-screen text-gray-900 selection:bg-red-dot selection:text-white">
         <Cursor />
         <Header />
         <main>
@@ -66,7 +66,7 @@ const App: React.FC = () => {
   // ── Blog listing ────────────────────────────────────
   if (pathname === '/blog') {
     return (
-      <div className="bg-black min-h-screen text-white selection:bg-red-dot selection:text-white">
+      <div className="bg-white min-h-screen text-gray-900 selection:bg-red-dot selection:text-white">
         <Cursor />
         <Header />
         <main>
@@ -80,7 +80,7 @@ const App: React.FC = () => {
 
   // ── Home page (default) ─────────────────────────────
   return (
-    <div className="bg-black min-h-screen text-white selection:bg-red-dot selection:text-white">
+    <div className="bg-white min-h-screen text-gray-900 selection:bg-red-dot selection:text-white">
       <Cursor />
       <Header />
       <main>

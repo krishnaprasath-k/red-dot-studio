@@ -108,16 +108,16 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-10 h-10 border-2 border-neutral-700 border-t-red-dot rounded-full animate-spin" />
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-10 h-10 border-2 border-gray-300 border-t-red-dot rounded-full animate-spin" />
       </div>
     );
   }
 
   if (notFound || !post) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
-        <h1 className="font-display text-4xl font-bold text-white">404</h1>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6">
+        <h1 className="font-display text-4xl font-light text-gray-900">404</h1>
         <p className="text-gray-500">This article doesn't exist.</p>
         <button onClick={goBack} className="text-red-dot hover:underline font-mono text-sm">← Back to blog</button>
       </div>
@@ -134,10 +134,10 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-2 mb-12 text-sm font-mono"
         >
-          <button onClick={goHome} className="text-gray-500 hover:text-white transition-colors">Home</button>
-          <span className="text-gray-700">/</span>
-          <button onClick={goBack} className="text-gray-500 hover:text-white transition-colors">Blog</button>
-          <span className="text-gray-700">/</span>
+          <button onClick={goHome} className="text-gray-500 hover:text-gray-900 transition-colors">Home</button>
+          <span className="text-gray-300">/</span>
+          <button onClick={goBack} className="text-gray-500 hover:text-gray-900 transition-colors">Blog</button>
+          <span className="text-gray-300">/</span>
           <span className="text-gray-400 truncate max-w-xs">{post.title}</span>
         </motion.div>
 
@@ -152,7 +152,7 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-6">
               {post.tags.map(tag => (
-                <span key={tag} className="px-3 py-1 bg-neutral-800 rounded-full text-xs text-gray-300 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                <span key={tag} className="px-3 py-1 bg-gray-100 rounded-sm text-xs text-gray-600 font-mono uppercase tracking-wider flex items-center gap-1.5">
                   <Tag size={11} />
                   {tag}
                 </span>
@@ -160,7 +160,7 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
             </div>
           )}
 
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] text-white mb-6">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.08] text-gray-900 mb-6">
             {post.title}
           </h1>
 
@@ -170,9 +170,9 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
             </p>
           )}
 
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 font-mono border-t border-neutral-800 pt-6">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 font-mono border-t border-gray-200 pt-6">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-xs font-bold text-red-dot">
+              <div className="w-8 h-8 rounded-full bg-red-dot/10 flex items-center justify-center text-xs font-normal text-red-dot">
                 {post.author?.charAt(0) || 'R'}
               </div>
               <span>{post.author}</span>
@@ -185,7 +185,7 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
               <Clock size={14} />
               <span>{estimateReadTime(post.content)} min read</span>
             </div>
-            <button onClick={sharePost} className="flex items-center gap-1.5 hover:text-white transition-colors ml-auto">
+            <button onClick={sharePost} className="flex items-center gap-1.5 hover:text-red-dot transition-colors ml-auto">
               <Share2 size={14} />
               <span>Share</span>
             </button>
@@ -193,20 +193,18 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
         </motion.header>
 
         {/* Cover Image */}
-        {post.cover_image && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="aspect-[21/9] overflow-hidden rounded-sm mb-16 bg-neutral-900"
-          >
-            <img
-              src={post.cover_image}
-              alt={post.title}
-              className="object-cover w-full h-full"
-            />
-          </motion.div>
-        )}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="aspect-[21/9] overflow-hidden rounded-sm mb-16 bg-white"
+        >
+          <img
+            src={post.cover_image || '/blog-cover-default.svg'}
+            alt={post.title}
+            className="object-cover w-full h-full"
+          />
+        </motion.div>
 
         {/* Post content */}
         <motion.div
@@ -216,7 +214,7 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
           className="max-w-3xl mx-auto"
         >
           <div
-            className="prose prose-invert max-w-none text-gray-300 text-lg leading-relaxed"
+            className="prose max-w-none text-gray-700 text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
           />
         </motion.div>
@@ -226,11 +224,11 @@ export const BlogPost: React.FC<{ slug: string }> = ({ slug }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="max-w-3xl mx-auto mt-20 pt-10 border-t border-neutral-800"
+          className="max-w-3xl mx-auto mt-20 pt-10 border-t border-gray-200"
         >
           <button
             onClick={goBack}
-            className="group inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-mono text-sm"
+            className="group inline-flex items-center gap-2 text-gray-500 hover:text-red-dot transition-colors font-mono text-sm"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             Back to all articles

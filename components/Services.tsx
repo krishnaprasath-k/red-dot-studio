@@ -7,17 +7,17 @@ export const Services: React.FC = () => {
   const [openService, setOpenService] = useState<string | null>(SERVICES[0].id);
 
   return (
-    <section id="services" className="py-24 border-t border-neutral-800 bg-neutral-900/30">
+    <section id="services" className="py-24 border-t border-gray-200 bg-gray-50">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12">
             
             {/* Left Column: Title */}
             <div className="lg:col-span-4">
                  <span className="text-red-dot font-mono text-sm mb-4 block">02 / CAPABILITIES</span>
-                 <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                 <h2 className="font-display text-4xl md:text-5xl font-light tracking-tight mb-6">
                     What we deliver
                  </h2>
-                 <p className="text-gray-400 max-w-xs">
+                 <p className="text-gray-500 max-w-xs">
                     End-to-end — from the first whiteboard sketch to the last line of production code.
                  </p>
             </div>
@@ -27,7 +27,7 @@ export const Services: React.FC = () => {
                 {SERVICES.map((service) => (
                     <div 
                         key={service.id} 
-                        className="border-b border-neutral-800"
+                        className="border-b border-gray-200"
                     >
                         <button 
                             onClick={() => setOpenService(openService === service.id ? null : service.id)}
@@ -35,11 +35,11 @@ export const Services: React.FC = () => {
                         >
                             <div className="flex items-baseline gap-8">
                                 <span className="font-mono text-sm text-gray-500">{service.number}</span>
-                                <h3 className={`text-2xl md:text-3xl font-display transition-colors duration-300 ${openService === service.id ? 'text-white' : 'text-gray-400 group-hover:text-white'}`}>
+                                <h3 className={`text-2xl md:text-3xl font-display transition-colors duration-300 ${openService === service.id ? 'text-gray-900' : 'text-gray-400 group-hover:text-gray-900'}`}>
                                     {service.title}
                                 </h3>
                             </div>
-                            <span className="text-gray-500 group-hover:text-white transition-colors pt-2">
+                            <span className="text-gray-500 group-hover:text-gray-900 transition-colors pt-2">
                                 {openService === service.id ? <Minus size={20} /> : <Plus size={20} />}
                             </span>
                         </button>
@@ -59,7 +59,7 @@ export const Services: React.FC = () => {
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {service.tags.map(tag => (
-                                                <span key={tag} className="px-3 py-1 bg-neutral-800 rounded-full text-xs text-gray-300 font-mono uppercase tracking-wider">
+                                                <span key={tag} className="px-3 py-1 bg-gray-200 rounded-sm text-xs text-gray-600 font-mono uppercase tracking-wider">
                                                     {tag}
                                                 </span>
                                             ))}

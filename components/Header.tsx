@@ -49,13 +49,13 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${isOpen ? 'bg-transparent' : 'bg-black/80 backdrop-blur-md border-b border-neutral-800'}`}>
+      <header className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${isOpen ? 'bg-transparent' : 'bg-white/80 backdrop-blur-md border-b border-gray-200'}`}>
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <a href="/" className="relative z-50 flex items-center gap-2 group" onClick={(e) => { e.preventDefault(); setIsOpen(false); window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }}>
-              <div className={`w-3 h-3 rounded-full transition-colors duration-300 group-hover:scale-125 ${isOpen ? 'bg-white' : 'bg-red-dot'}`}></div>
-              <span className="font-display font-bold text-xl tracking-tighter mix-blend-difference">RED DOT STUDIO</span>
+              <div className={`w-3 h-3 rounded-full transition-colors duration-300 group-hover:scale-125 bg-red-dot`}></div>
+              <span className="font-display font-normal text-xl tracking-tighter text-gray-900">RED DOT STUDIO</span>
             </a>
 
             {/* Desktop Nav */}
@@ -64,7 +64,7 @@ export const Header: React.FC = () => {
                 <a 
                   key={item} 
                   href={`#${item.toLowerCase()}`}
-                  className="text-sm font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-wide"
+                  className="text-sm font-medium text-gray-500 hover:text-red-dot transition-colors uppercase tracking-wide"
                 >
                   {item}
                 </a>
@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
               <a 
                 href="/blog"
                 onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/blog'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                className="text-sm font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-wide"
+                className="text-sm font-medium text-gray-500 hover:text-red-dot transition-colors uppercase tracking-wide"
               >
                 Blog
               </a>
@@ -82,7 +82,7 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-4">
               <a 
                 href="#contact" 
-                className={`hidden md:inline-flex items-center justify-center px-6 py-2 text-sm font-medium rounded-full transition-colors ${isOpen ? 'opacity-0 pointer-events-none' : 'text-black bg-white hover:bg-gray-200'}`}
+                className={`hidden md:inline-flex items-center justify-center px-6 py-2 text-sm font-medium rounded-sm transition-colors ${isOpen ? 'opacity-0 pointer-events-none' : 'text-white bg-red-dot hover:bg-red-600'}`}
               >
                 Start Project
               </a>
@@ -95,15 +95,15 @@ export const Header: React.FC = () => {
               >
                 <motion.span 
                   animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-white block transition-colors group-hover:bg-red-dot"
+                  className="w-6 h-0.5 bg-gray-900 block transition-colors group-hover:bg-red-dot"
                 />
                 <motion.span 
                   animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-6 h-0.5 bg-white block transition-colors group-hover:bg-red-dot"
+                  className="w-6 h-0.5 bg-gray-900 block transition-colors group-hover:bg-red-dot"
                 />
                 <motion.span 
                   animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  className="w-6 h-0.5 bg-white block transition-colors group-hover:bg-red-dot"
+                  className="w-6 h-0.5 bg-gray-900 block transition-colors group-hover:bg-red-dot"
                 />
               </button>
             </div>
@@ -119,7 +119,7 @@ export const Header: React.FC = () => {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="fixed inset-0 bg-neutral-900 z-40 flex flex-col justify-center px-4 sm:px-6"
+            className="fixed inset-0 bg-white z-40 flex flex-col justify-center px-4 sm:px-6"
           >
              <div className="flex flex-col gap-6">
                 {navItems.map((item, index) => (
@@ -138,7 +138,7 @@ export const Header: React.FC = () => {
                             window.dispatchEvent(new PopStateEvent('popstate'));
                           }
                         }}
-                        className="font-display text-5xl sm:text-7xl font-bold text-white tracking-tighter hover:text-red-dot transition-colors block"
+                        className="font-display text-5xl sm:text-7xl font-light text-gray-900 tracking-tighter hover:text-red-dot transition-colors block"
                      >
                         {item}
                      </a>
@@ -150,16 +150,16 @@ export const Header: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute bottom-12 left-0 w-full px-6 flex justify-between items-end text-sm text-gray-500 font-mono"
+                className="absolute bottom-12 left-0 w-full px-6 flex justify-between items-end text-sm text-gray-400 font-mono"
              >
                 <div className="flex flex-col gap-1">
                    <span>Brussels, BE</span>
                    <span>Av. Louise 231</span>
                 </div>
                 <div className="flex gap-4">
-                   <a href="#" className="hover:text-white">IG</a>
-                   <a href="#" className="hover:text-white">TW</a>
-                   <a href="#" className="hover:text-white">LN</a>
+                   <a href="#" className="hover:text-red-dot">IG</a>
+                   <a href="#" className="hover:text-red-dot">TW</a>
+                   <a href="#" className="hover:text-red-dot">LN</a>
                 </div>
              </motion.div>
           </motion.div>

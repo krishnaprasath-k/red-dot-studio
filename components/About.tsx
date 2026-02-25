@@ -27,7 +27,7 @@ export const About: React.FC = () => {
   };
 
   return (
-    <section id="studio" className="py-24 border-t border-neutral-800">
+    <section id="studio" className="py-24 border-t border-gray-200">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Label */}
@@ -51,14 +51,14 @@ export const About: React.FC = () => {
         >
           <motion.h2 
             variants={itemVariants}
-            className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.1] max-w-4xl mb-8"
+            className="font-display text-3xl md:text-5xl lg:text-[3.5rem] font-light tracking-tight leading-[1.1] max-w-4xl mb-8 text-gray-900"
           >
             Most agencies sell you deliverables.
             <span className="text-gray-500"> We sell you outcomes.</span>
           </motion.h2>
           <motion.p 
             variants={itemVariants}
-            className="text-lg text-gray-400 max-w-2xl leading-relaxed"
+            className="text-lg text-gray-500 max-w-2xl leading-relaxed"
           >
             Red Dot Studio exists for one reason: to make your business look as good as it actually is.
             We combine sharp strategy with meticulous execution so every brand touchpoint earns trust, 
@@ -72,7 +72,7 @@ export const About: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid md:grid-cols-3 gap-px bg-neutral-800 mb-20"
+          className="grid md:grid-cols-3 gap-px bg-gray-200 mb-20"
         >
           {[
             {
@@ -94,10 +94,10 @@ export const About: React.FC = () => {
             <motion.div 
               key={i}
               variants={itemVariants}
-              className="bg-black p-8 md:p-10 flex flex-col"
+              className="bg-white p-8 md:p-10 flex flex-col"
             >
               <span className="text-red-dot font-mono text-sm mb-6">{item.num}</span>
-              <h4 className="text-white font-display font-semibold text-xl mb-3">{item.title}</h4>
+              <h4 className="text-gray-900 font-display font-normal text-xl mb-3">{item.title}</h4>
               <p className="text-gray-500 text-sm leading-relaxed flex-1">{item.desc}</p>
             </motion.div>
           ))}
@@ -111,14 +111,14 @@ export const About: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="border-l-2 border-red-dot pl-8 md:pl-12 py-4 mb-20 max-w-3xl"
         >
-          <blockquote className="text-xl md:text-2xl text-gray-300 leading-relaxed font-display mb-6">
+          <blockquote className="text-xl md:text-2xl text-gray-700 leading-relaxed font-display font-light mb-6">
             "Red Dot didn't just redesign our site — they redesigned our pipeline. 
             Inbound leads doubled in the first quarter."
           </blockquote>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-sm font-bold text-red-dot">MK</div>
+            <div className="w-10 h-10 rounded-full bg-red-dot/10 flex items-center justify-center text-sm font-normal text-red-dot">MK</div>
             <div>
-              <p className="text-white text-sm font-medium">Marc Kellner</p>
+              <p className="text-gray-900 text-sm font-normal">Marc Kellner</p>
               <p className="text-gray-500 text-xs">CEO, Velta Finance</p>
             </div>
           </div>
@@ -130,12 +130,12 @@ export const About: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-10 border-t border-neutral-800"
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-10 border-t border-gray-200"
         >
-          <p className="text-gray-400 text-lg">Ready to see what Red Dot can do for you?</p>
+          <p className="text-gray-500 text-lg">Ready to see what Red Dot can do for you?</p>
           <a 
             href="#contact"
-            className="group inline-flex items-center gap-2 text-white font-medium hover:text-red-dot transition-colors"
+            className="group inline-flex items-center gap-2 text-red-dot font-normal hover:text-red-600 transition-colors"
           >
             Let's talk <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>

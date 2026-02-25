@@ -3,34 +3,66 @@ import { Project, Service } from './types';
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'Velta Finance',
-    category: 'Brand Identity & Web Platform',
-    description: 'Complete rebrand and investor-facing web platform for a Series B fintech. Resulted in 40% more qualified leads within 90 days.',
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+    title: 'Openwork',
+    category: 'Full Design & Development',
+    description: 'Web3 blockchain application built for freelancers and contractors — enabling trustless transactions, on-chain contracts, and decentralised payment escrow.',
+    imageUrl: 'https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=1200&auto=format&fit=crop',
     year: '2025'
   },
   {
     id: '2',
-    title: 'Arkhaus Group',
-    category: 'Web Design & Development',
-    description: 'Award-winning portfolio site for a Copenhagen architecture firm. 4.2s avg. session duration, 2x industry benchmark.',
-    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
+    title: 'Zenzo',
+    category: 'Full Design & Development',
+    description: 'Rider connect app where motorcycle enthusiasts can organise group rides, discover new routes, and collaborate with the riding community.',
+    imageUrl: '/zenzo-splash.svg',
     year: '2025'
   },
   {
     id: '3',
-    title: 'Maison Claret',
-    category: 'E-Commerce & Brand Strategy',
-    description: 'Luxury skincare DTC launch — from naming to Shopify build. €180K revenue in the first quarter post-launch.',
-    imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1200&auto=format&fit=crop',
-    year: '2024'
+    title: 'Kiva',
+    category: 'E-Commerce UI/UX Design',
+    description: 'The ultimate all-in-one e-commerce experience — a comprehensive platform design covering product discovery, cart, checkout, and post-purchase flow.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/fc263e222233893.Y3JvcCw0MzIwLDMzNzksMCw0NzA.png',
+    year: '2025'
   },
   {
     id: '4',
-    title: 'Conduit SaaS',
+    title: 'MeDate',
+    category: 'Mobile App UI/UX Design',
+    description: 'A mindfulness companion app designed to help users build daily reflection habits through guided journaling, mood tracking, and habit streaks.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/a38197222126613.Y3JvcCw0MzIwLDMzNzksMCw0NzA.png',
+    year: '2025'
+  },
+  {
+    id: '5',
+    title: 'Finance App',
     category: 'Product Design & UI/UX',
-    description: 'End-to-end design system and dashboard for a logistics SaaS platform. Reduced user onboarding time by 60%.',
-    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+    description: 'A clean, data-dense personal finance application UI — balancing clarity with depth to help users track spending, savings, and investment portfolios.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/b22067222056687.Y3JvcCw0MTQyLDMyNDAsOTIsMA.png',
+    year: '2025'
+  },
+  {
+    id: '6',
+    title: 'Aicade',
+    category: 'Web Design',
+    description: 'AI-powered 2D game builder website — a futuristic, high-energy landing page designed to onboard developers and showcase the platform\'s generative capabilities.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/624ba4220528875.Y3JvcCw4NTA0LDY2NTIsMzMyNiww.png',
+    year: '2024'
+  },
+  {
+    id: '7',
+    title: 'Smart TV Movie Experience',
+    category: 'UI Design',
+    description: 'A cinematic smart TV interface redesign focused on immersive content discovery, seamless navigation, and an elevated 10-foot viewing experience.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/2d1775222877125.Y3JvcCw1NTA3LDQzMDgsMTA5MCww.png',
+    year: '2024'
+  },
+  {
+    id: '8',
+    title: 'AI Landing Page',
+    category: 'Web Design',
+    description: 'High-conversion landing page for an AI SaaS product — bold typography, animated hero sections, and a clear feature-to-CTA narrative flow.',
+    imageUrl: 'https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/7314d9219289123.Y3JvcCwzNDU2LDI3MDMsMCw1NjYz.png',
     year: '2024'
   }
 ];

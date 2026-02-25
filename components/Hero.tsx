@@ -23,7 +23,7 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-grid-pattern bg-[length:60px_60px] opacity-[0.04] pointer-events-none" />
       
       {/* Red accent glow — subtle, bottom right */}
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-red-dot/[0.04] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-red-dot/[0.06] rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
         
@@ -34,11 +34,11 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="flex flex-wrap items-center gap-4 mb-10"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-neutral-800 rounded-full text-xs font-mono uppercase text-gray-500 tracking-wider">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-sm text-xs font-mono uppercase text-gray-500 tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             Accepting new projects
           </span>
-          <span className="text-xs text-gray-600 font-mono">Est. 2019 · Bangalore, India</span>
+          <span className="text-xs text-gray-400 font-mono">Est. 2019 · Bangalore, India</span>
         </motion.div>
 
         {/* Main headline */}
@@ -47,7 +47,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-[clamp(2.5rem,7vw,7rem)] font-bold tracking-[-0.04em] leading-[0.92] mb-6"
+            className="font-display text-[clamp(2.5rem,7vw,7rem)] font-light tracking-[-0.04em] leading-[0.92] mb-6 text-gray-900"
           >
             We build brands<br />
             that <span className="text-red-dot">outperform.</span>
@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed"
+            className="text-lg sm:text-xl text-gray-500 max-w-2xl leading-relaxed"
           >
             Strategy-led design studio helping ambitious companies ship digital products 
             that convert visitors into customers — faster than the competition.
@@ -73,13 +73,13 @@ export const Hero: React.FC = () => {
         >
           <a 
             href="#contact"
-            className="group inline-flex items-center gap-3 px-7 py-3.5 bg-red-dot text-white font-medium rounded-full hover:bg-red-600 transition-all hover:gap-4"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 bg-red-dot text-white font-medium rounded-sm hover:bg-red-600 transition-all hover:gap-4"
           >
             Start a project <ArrowRight className="w-4 h-4" />
           </a>
           <a 
             href="#work"
-            className="inline-flex items-center gap-2 px-7 py-3.5 border border-neutral-700 text-gray-300 font-medium rounded-full hover:border-white hover:text-white transition-all"
+            className="inline-flex items-center gap-2 px-7 py-3.5 border border-gray-300 text-gray-600 font-medium rounded-sm hover:border-red-dot hover:text-red-dot transition-all"
           >
             View our work
           </a>
@@ -90,7 +90,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.55 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-neutral-800/80"
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-gray-200"
         >
           {[
             { value: 60, suffix: '+', label: 'Projects Delivered' },
@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
             { value: 6, suffix: '+', label: 'Years in Business' },
           ].map((stat, i) => (
             <div key={i} className="flex flex-col">
-              <span className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              <span className="font-display text-3xl sm:text-4xl font-normal text-gray-900 tracking-tight">
                 <Counter from={0} to={stat.value} suffix={stat.suffix} duration={2 + i * 0.3} />
               </span>
               <span className="text-sm text-gray-500 mt-1 font-mono uppercase tracking-wider">{stat.label}</span>
